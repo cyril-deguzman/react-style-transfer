@@ -1,0 +1,7 @@
+.ant-card-body {
+    padding: 15px 10px 15px 10px;
+}
+
+.ant-card-bordered .ant-card-cover {
+    margin: 0
+}

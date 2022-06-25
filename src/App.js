@@ -42,74 +42,80 @@ const App = () => {
   return (
     <>
     <Layout>
-    <Header className="header">
-      <div className="logo">
-      </div>
-      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
-    </Header>
-    <Content
-      style={{
-        padding: '0 50px',
-      }}
-    >
-      <Layout
-        className="site-layout-background"
-        style={{
-          margin: '24px 0 0 0',
-          padding: '24px 0',
-        }}
-      >
+      <Layout className="front-page">
+        <Header className="header">
+          <div className="logo">
+          </div>
+          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
+        </Header>
         <Content
           style={{
-            padding: '0 24px',
-            minHeight: 0,
+            padding: '0 50px',
+            height: '0'
           }}
         >
-          <Row>
-            <Col span={8} align='middle'>
-              <p>Content Image</p>
-              <UploadButton type={'content'}/>
-            </Col>
-            <Col span={8} align='middle'>
-              <p>Style Image</p>
-              <UploadButton type={'style'}/>
-            </Col>
-            <Col span={8} align='middle'>
-              <Button type='primary' onClick={handleChange}>test</Button>
-            </Col>
-          </Row>
+          <Layout
+            className="site-layout-background"
+            style={{
+              margin: '24px 0 0 0',
+              padding: '24px 0',
+              height: '100%'
+              // display: 'flex',
+              // verticalAlign: 'middle'
+            }}
+          >
+            <Content
+              style={{
+                padding: '0 24px',
+                minHeight: 0,
+              }}
+            >
+              <Row>
+                <Col span={8} align='middle'>
+                  <p>Content Image</p>
+                  <UploadButton type={'content'}/>
+                </Col>
+                <Col span={8} align='middle'>
+                  <p>Style Image</p>
+                  <UploadButton type={'style'}/>
+                </Col>
+                <Col span={8} align='middle'>
+                  <Button type='primary' onClick={handleChange}>test</Button>
+                </Col>
+              </Row>
+            </Content>
+          </Layout>
         </Content>
       </Layout>
 
       <Layout
-        className = 'site-layout-background'
-        style={{
-          margin: '24px 0 0 0',
-          padding: '24px 250px',
-        }}
-      >
-        <Content 
           style={{
-          padding: '0 50px',}}
+            margin: '24px 0 0 0',
+            padding: '24px 20%',
+          }}
         >
-          <How/>
-          
-        </Content>
+          <Content 
+            style={{
+            padding: '0 50px',}}
+          >
+            <How/>
+            
+          </Content>
       </Layout>
 
-    </Content>
-    <Footer
-      style={{
-        textAlign: 'center',
-      }}
-    >
-    
-      
-      <Space direction='vertical'>
-        Style Transfer ©2022 Created by Mga Natalo sa 50/50 kay Qiqi
-        <GithubOutlined />
-      </Space>
-    </Footer>
+      <Footer
+        style={{
+          textAlign: 'center',
+        }}
+      >
+
+        <Space direction='vertical'>
+          Style Transfer ©2022 Created by Mga Natalo sa 50/50 kay Qiqi
+          <Button type="text" href='https://github.com/cyril-deguzman/react-style-transfer' target="_blank">
+            <GithubOutlined className="teamSocialIcon" />
+          </Button>
+        </Space>
+      </Footer>
   </Layout>
     
     </>
