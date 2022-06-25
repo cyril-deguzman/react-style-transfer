@@ -1,12 +1,14 @@
 // import antd component library
 import { useEffect, useState } from 'react';
-import { Col, Row, Layout, Menu, Button } from 'antd';
+import { Col, Row, Layout, Menu, Button, Space } from 'antd';
+import { GithubOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.min.css';
 import './css/App.css'
 import * as tf from '@tensorflow/tfjs'
 
 // import components
 import UploadButton from './components/UploadButton';
+import How from './components/How';
 
 // constants
 const { Header, Content, Footer } = Layout;
@@ -78,13 +80,35 @@ const App = () => {
           </Row>
         </Content>
       </Layout>
+
+      <Layout
+        className = 'site-layout-background'
+        style={{
+          margin: '24px 0 0 0',
+          padding: '24px 250px',
+        }}
+      >
+        <Content 
+          style={{
+          padding: '0 50px',}}
+        >
+          <How/>
+          
+        </Content>
+      </Layout>
+
     </Content>
     <Footer
       style={{
         textAlign: 'center',
       }}
     >
-      Style Transfer ©2022 Created by Mga Natalo sa 50/50 kay Qiqi
+    
+      
+      <Space direction='vertical'>
+        Style Transfer ©2022 Created by Mga Natalo sa 50/50 kay Qiqi
+        <GithubOutlined />
+      </Space>
     </Footer>
   </Layout>
     
