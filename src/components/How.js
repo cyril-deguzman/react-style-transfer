@@ -23,7 +23,6 @@ const How = () => {
       style ={{
         justifyContent: "center"
       }}>
-      {/** html code */ }
 
       <Title level={2}> HOW IT WORKS </Title>
       
@@ -37,15 +36,14 @@ const How = () => {
         a famous artist, then style transfer is the computer vision technique that turns this into a reality.
       </Paragraph>
 
-      <Space direction="horizontal" wrap="true"
-      style ={{
-        width: "100%",
-        justifyContent: "center"
-      }}>
-        <Col span={8}
+      <Row justify='center'
+        gutter={{md: 100}}>
+        <Col
+          xs='24'
+          sm='12'
+          md='8'
           style={{
             padding: '16px 16px',
-            flex: '0 0 0'
           }}>
           <Card
             style={{
@@ -58,15 +56,15 @@ const How = () => {
                 height='200'
                 width='200'
               />
-            }
-          >
+            }>
             <Meta title="Content Image"/>
           </Card>
         </Col>
-        <Col span={8}
+        <Col xs='24'
+          sm='12'
+          md='8'
           style={{
             padding: '16px 16px',
-            flex: '0 0 0'
           }}>
           <Card
             style={{
@@ -84,10 +82,11 @@ const How = () => {
             <Meta title="Style Image"/>
           </Card>
         </Col>
-        <Col span={8}
+        <Col xs='24'
+          sm='24'
+          md='8'
           style={{
             padding: '16px 16px',
-            flex: '0 0 0'
           }}>
           <Card
             style={{
@@ -104,7 +103,7 @@ const How = () => {
             <Meta title="Stylized Image"/>
           </Card>
         </Col>
-      </Space>
+      </Row>
 
       <Title level={4}> The Model </Title>
       <Paragraph style ={{
