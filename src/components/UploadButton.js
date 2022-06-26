@@ -1,5 +1,5 @@
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons';
-import { message, Upload, Select } from 'antd';
+import { message, Upload, Select, Button } from 'antd';
 import { useState } from 'react';
 import 'antd/dist/antd.min.css';
 import '../css/UploadButton.css';
@@ -25,10 +25,10 @@ const beforeUpload = (file) => {
   const isLt2M = file.size / 1024 / 1024 < 2;
 
   if (!isJpgOrPng) 
-    message.error('You can only upload JPG/PNG file!');
+    message.error('You can only upload JPG/PNG file types!');
 
   if (!isLt2M) 
-    message.error('Image must smaller than 2MB!');
+    message.error('Image must be smaller than 2MB!');
   
   return isJpgOrPng && isLt2M;
 };
@@ -79,6 +79,7 @@ const UploadButton = (type) => {
       >
       <img
             id={type.type}
+            ref={type.innerRef}
             src={transparent}
             alt="avatar"
             style={{
@@ -91,7 +92,7 @@ const UploadButton = (type) => {
     </div>
   );
   
-  const base = (
+  const contentUpload = (
     <Upload
         name="avatar"
         listType="picture-card"
@@ -105,6 +106,7 @@ const UploadButton = (type) => {
           <img
             id={type.type}
             src={imageUrl}
+            ref={type.innerRef}
             alt="avatar"
             style={{
               height: '100%',
@@ -116,10 +118,10 @@ const UploadButton = (type) => {
         )}
       </Upload>
   )
-
-  const dropDown = (
+  
+  const styleUpload = (
     <div>
-      {base}
+      {contentUpload}
       <Select
         defaultValue="custom"
         style={{
@@ -138,22 +140,21 @@ const UploadButton = (type) => {
           <Option value="scream">The Scream</Option>
           <Option value="park">Park</Option>
         </OptGroup>
-        
       </Select>
     </div>
   )
 
   const stylized = (
     <div>
-      <canvas id='stylized-canvas'>
-
+      <canvas id='stylized-canvas' ref={type.innerRef}>
       </canvas>
     </div>
   )
+
   return (
     <> 
-      {type.type == 'content' ? base: null}
-      {type.type == 'style' ? dropDown: null}
+      {type.type == 'content' ? contentUpload: null}
+      {type.type == 'style' ? styleUpload: null}
       {type.type == 'stylized' ? stylized: null}
     </>
   );

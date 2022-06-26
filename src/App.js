@@ -1,11 +1,12 @@
 // import antd component library
-import { useEffect, useState } from 'react';
 import { Col, Row, Layout, Menu, Button, Space } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
 import { ParallaxBanner, ParallaxProvider } from 'react-scroll-parallax';
+import { useRef, useState, useEffect } from 'react';
+import * as tf from '@tensorflow/tfjs'
 import 'antd/dist/antd.min.css';
 import './css/App.css'
-import * as tf from '@tensorflow/tfjs'
+
 
 // import components
 import UploadButton from './components/UploadButton';
@@ -23,7 +24,10 @@ const items1 = ['1', '2', '3'].map((key) => ({
 // App Component
 const App = () => {
   const [model, setModel] = useState({});
-
+  const canvasRef = useRef()
+  const contentRef = useRef()
+  const styleRef = useRef()
+  
   useEffect(() => {
     fetchModel()
   }, []);
@@ -36,9 +40,11 @@ const App = () => {
     
     setModel(fetchedModel)
   }
-
-  const handleChange = () => {
+  const handleStyle = () => {
     console.log(model)
+    console.log(canvasRef.current)
+    console.log(contentRef.current)
+    console.log(styleRef.current)
   }
 
   return (
@@ -77,7 +83,7 @@ const App = () => {
                 md='8'
                 align='middle'>
                   <p>Content Image</p>
-                  <UploadButton type={'content'}/>
+                  <UploadButton type={'content'} innerRef={contentRef}/>
                 </Col>
                 <Col
                 xs='24'
@@ -85,23 +91,20 @@ const App = () => {
                 md='8'
                 align='middle'>
                   <p>Style Image</p>
-                  <UploadButton type={'style'}/>
+                  <UploadButton type={'style'} innerRef={styleRef}/>
                 </Col>
                 <Col
                   xs='24'
                   sm='12'
                   md='8' align='middle'>
                     <p>Stylized Image</p>
-                    <UploadButton type={'stylized'}/>
-                  <div>
-                    <Button type='primary' onClick={handleChange}
+                    <UploadButton type={'stylized'} innerRef={canvasRef}/>
+                    <Button type='primary' onClick={handleStyle}
                     style={{
                       width: 120,
                       margin: '13px 0 0 0',
                     }}
-                    >Style</Button>
-                  </div>
-            
+                    >Style</Button>            
                 </Col>
               </Row>
               </Content>
