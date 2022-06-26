@@ -112,7 +112,7 @@ const App = () => {
       <Layout
         className = 'site-layout-background'
         style={{
-          margin: '24px 50px 0 50px',
+          margin: '40px 50px 0 50px',
           padding: '24px 20%',
         }}
       >
