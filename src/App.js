@@ -1,6 +1,6 @@
 // import antd component library
 import { useEffect, useState } from 'react';
-import { Col, Row, Layout, Menu, Button, Space, Typography } from 'antd';
+import { Col, Row, Layout, Menu, Button, Space, Typography, PageHeader } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
 import { ParallaxBanner, ParallaxProvider } from 'react-scroll-parallax';
 import 'antd/dist/antd.min.css';
@@ -11,6 +11,7 @@ import * as tf from '@tensorflow/tfjs'
 import UploadButton from './components/UploadButton';
 import How from './components/How';
 import bg from './img/bg3.jpg';
+import logo from './img/logo1.png';
 
 // constants
 const { Header, Content, Footer } = Layout;
@@ -45,17 +46,22 @@ const App = () => {
   return (
     <>
     <Layout>
-    <Header className="header">
-      <div className="logo">
-      </div>
-      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
-    </Header>
-    <Content>
-      <ParallaxProvider>
+    <ParallaxProvider>
         <ParallaxBanner 
           layers={[{ image: bg, speed: -50}]}
           style={{ }}>
+
+        <Content>
+            <Header className="header" id="navbar">
+              <PageHeader
+                style={{
+                  padding: '0 0'
+                }}>
+                <img src={logo} height={'100px'} width={'110px'}/>
+              </PageHeader>
+            </Header>
           
+
           <div id='header-content'>
             <Layout
               className="site-layout-background"
@@ -116,6 +122,7 @@ const App = () => {
               </Content>
             </Layout>
           </div>
+          </Content>
         </ParallaxBanner>
       </ParallaxProvider>
       <Layout
@@ -134,7 +141,6 @@ const App = () => {
         </Content>
       </Layout>
 
-    </Content>
     <Footer
       style={{
         textAlign: 'center',
