@@ -29,7 +29,8 @@ const How = () => {
       <Title level={4}> Image Style Transfer </Title>
       <Paragraph
       style ={{
-        textAlign: "justify"
+        textAlign: "justify",
+        color: 'black'
       }}>
         Style transfer is a computer vision technique that allows us to recompose the content of an image 
         in the style of another. If you've ever imagined what a photo might look like if it were painted by 
@@ -107,7 +108,8 @@ const How = () => {
 
       <Title level={4}> The Model </Title>
       <Paragraph style ={{
-        textAlign: "justify"
+        textAlign: "justify",
+        color: 'black'
       }}>
         The web application makes use of the Fast Arbitrary Image Style Transfer Model that is found on Tensorflow Hub
         which was published by Google. The original work of image style transfer with neural networks has a slow
@@ -118,7 +120,8 @@ const How = () => {
 
       <Title level={4}> Is the Code Available on GitHub? </Title>
       <Paragraph style ={{
-        textAlign: "justify"
+        textAlign: "justify",
+        color: 'black'
       }}>
         Yes! You can check out our GitHub {github}.
       </Paragraph>
@@ -134,10 +137,14 @@ const How = () => {
         <Link href="https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/tutorials/generative/style_transfer.ipynb" target="_blank">
           Style Transfer Google Colab Notebook
         </Link>
-        <Text>
+        <Text style={{
+          color: 'black'
+        }}>
           Gatys, L., Ecker, A., & Bethge, M. (2016, September). A neural algorithm of artistic style. Journal of Vision, 326. https://doi.org/10.1167/16.12.326
         </Text>
-        <Text>
+        <Text style={{
+          color: 'black'
+        }}>
           Ghiasi, G., Lee, H., Kudlur, M., Dumoulin, V., & Shlens, J. (2017). Exploring the structure of a real-time, arbitrary neural artistic stylization network. arXiv preprint arXiv:1705.06830.
         </Text>
       </Space>

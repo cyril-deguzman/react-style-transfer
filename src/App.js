@@ -1,6 +1,6 @@
 // import antd component library
 import { useEffect, useState } from 'react';
-import { Col, Row, Layout, Menu, Button, Space } from 'antd';
+import { Col, Row, Layout, Menu, Button, Space, Typography } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
 import { ParallaxBanner, ParallaxProvider } from 'react-scroll-parallax';
 import 'antd/dist/antd.min.css';
@@ -14,6 +14,7 @@ import bg from './img/bg3.jpg';
 
 // constants
 const { Header, Content, Footer } = Layout;
+const { Title } = Typography;
 
 const items1 = ['1', '2', '3'].map((key) => ({
   key,
@@ -69,14 +70,22 @@ const App = () => {
                   minHeight: 0,
                 }}
               >
-            
+              
+              <Row justify='center'>
+                <Col align='middle'>
+                  <Title id='main-title'>
+                    Image Style Transfer
+                  </Title>
+                </Col>
+              </Row>
+              
               <Row justify='space-evenly'>
                 <Col
                 xs='24'
                 sm='12'
                 md='8'
                 align='middle'>
-                  <p>Content Image</p>
+                  <p className='title-image'>Content Image</p>
                   <UploadButton type={'content'}/>
                 </Col>
                 <Col
@@ -84,14 +93,14 @@ const App = () => {
                 sm='12'
                 md='8'
                 align='middle'>
-                  <p>Style Image</p>
+                  <p className='title-image'>Style Image</p>
                   <UploadButton type={'style'}/>
                 </Col>
                 <Col
                   xs='24'
                   sm='12'
                   md='8' align='middle'>
-                    <p>Stylized Image</p>
+                    <p className='title-image'>Stylized Image</p>
                     <UploadButton type={'stylized'}/>
                   <div>
                     <Button type='primary' onClick={handleChange}
