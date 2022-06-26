@@ -2,10 +2,12 @@
 import React from 'react';
 import 'antd/dist/antd.min.css';
 import { Space, Typography, Card, Col, Row } from 'antd';
-import '../css/How.css';
+
 import van from '../img/van.jpg'
 import raisehand from '../img/raised-hand.jpeg'
 import styleraise from '../img/styled-raise.png'
+
+import Sample from './Sample';
 
 const { Title, Paragraph, Link, Text } = Typography;
 const { Meta } = Card;
@@ -46,63 +48,34 @@ const How = () => {
           style={{
             padding: '16px 16px',
           }}>
-          <Card
-            style={{
-              width: 200
-            }}
-            cover={
-              <img
-                alt="content"
-                src={raisehand}
-                height='200'
-                width='200'
-              />
-            }>
-            <Meta title="Content Image"/>
-          </Card>
+          <Sample
+            srcImage={raisehand}
+            metaText="Content Image"
+            altText="Sample content image" />
         </Col>
+
         <Col xs='24'
           sm='12'
           md='8'
           style={{
             padding: '16px 16px',
           }}>
-          <Card
-            style={{
-              width: 200
-            }}
-            cover={
-              <img
-                alt="content"
-                src={van}
-                height='200'
-                width='200'
-              />
-            }
-          >
-            <Meta title="Style Image"/>
-          </Card>
+          <Sample
+            srcImage={van}
+            metaText="Style Image"
+            altText="Sample style image" />
         </Col>
+
         <Col xs='24'
           sm='24'
           md='8'
           style={{
             padding: '16px 16px',
           }}>
-          <Card
-            style={{
-              width: 200
-            }}
-            cover={
-              <img
-                alt="content"
-                src={styleraise}
-                height='200'
-                width='200'
-              />}
-          >
-            <Meta title="Stylized Image"/>
-          </Card>
+          <Sample
+            srcImage={styleraise}
+            metaText="Stylized Image"
+            altText="Sample stylized image" />
         </Col>
       </Row>
 
