@@ -97,7 +97,7 @@ const App = () => {
                     <Button type='primary' onClick={handleChange}
                     style={{
                       width: 120,
-                      margin: '20px 0 0 0',
+                      margin: '13px 0 0 0',
                     }}
                     >Style</Button>
                   </div>

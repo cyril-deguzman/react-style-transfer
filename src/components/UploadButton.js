@@ -7,6 +7,10 @@ import '../css/UploadButton.css';
 // import images
 import transparent from '../img/transparent.png'
 import van from '../img/van.jpg'
+import mosa from '../img/mona-lisa.jpg'
+import park from '../img/park.jpg'
+import scream from '../img/scream.jpg'
+import starry from '../img/starry.jpg'
 
 const { Option, OptGroup } = Select;
 
@@ -56,8 +60,12 @@ const UploadButton = (type) => {
 
   const handleDropdown = (value) => {
     switch(value) {
-      case 'van': console.log('van'); break;
-      case '': console.log('custom'); break;
+      case 'van': setImageUrl(van); break;
+      case 'starry': setImageUrl(starry); break;
+      case 'mosa': setImageUrl(mosa); break;
+      case 'scream': setImageUrl(scream); break;
+      case 'park': setImageUrl(park); break;
+      default: setImageUrl(transparent); break;
     }
   }
 
@@ -82,31 +90,9 @@ const UploadButton = (type) => {
       </div>
     </div>
   );
-
-  const dropDown = (
-    <div>
-      <Select
-        defaultValue="custom"
-        style={{
-          width: 120,
-          margin: '20px 0 0 0',
-        }}
-        onChange={handleDropdown}
-      >
-        <OptGroup label="Own Image">
-          <Option value="custom">Custom</Option>
-        </OptGroup>
-        <OptGroup label="Presets">
-          <Option value="van">Van Gogh</Option>
-          <Option value="starry-night">Starry Night</Option>
-        </OptGroup>
-        
-      </Select>
-    </div>
-  )
-  return (
-    <> 
-      <Upload
+  
+  const base = (
+    <Upload
         name="avatar"
         listType="picture-card"
         className="avatar-uploader"
@@ -129,7 +115,46 @@ const UploadButton = (type) => {
           uploadButton
         )}
       </Upload>
+  )
+
+  const dropDown = (
+    <div>
+      {base}
+      <Select
+        defaultValue="custom"
+        style={{
+          width: 120,
+          margin: '20px 0 0 0',
+        }}
+        onChange={handleDropdown}
+      >
+        <OptGroup label="Own Image">
+          <Option value="custom">Custom</Option>
+        </OptGroup>
+        <OptGroup label="Presets">
+          <Option value="van">Van Gogh</Option>
+          <Option value="starry">Starry Night</Option>
+          <Option value="mosa">Mona Lisa</Option>
+          <Option value="scream">The Scream</Option>
+          <Option value="park">Park</Option>
+        </OptGroup>
+        
+      </Select>
+    </div>
+  )
+
+  const stylized = (
+    <div>
+      <canvas id='stylized-canvas'>
+
+      </canvas>
+    </div>
+  )
+  return (
+    <> 
+      {type.type == 'content' ? base: null}
       {type.type == 'style' ? dropDown: null}
+      {type.type == 'stylized' ? stylized: null}
     </>
   );
 };
