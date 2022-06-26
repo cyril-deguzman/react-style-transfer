@@ -7,9 +7,10 @@ import React from 'react';
 const { Meta } = Card;
 
 const Sample = (props) => {
+
     return(
         <Parallax
-            animation={{ y: 0, opacity: 1, playScale: [0, 0.5] }}
+            animation={{ y: 0, opacity: 1, playScale: props.playScale }}
             style={{ transform: 'translateY(50px)', opacity: 0 }}
         >
             <Card

@@ -51,7 +51,8 @@ const How = () => {
           <Sample
             srcImage={raisehand}
             metaText="Content Image"
-            altText="Sample content image" />
+            altText="Sample content image" 
+            playScale={[0, 0.5]} />
         </Col>
 
         <Col xs='24'
@@ -63,7 +64,8 @@ const How = () => {
           <Sample
             srcImage={van}
             metaText="Style Image"
-            altText="Sample style image" />
+            altText="Sample style image"
+            playScale={[0.1, 0.6]} />
         </Col>
 
         <Col xs='24'
@@ -75,7 +77,8 @@ const How = () => {
           <Sample
             srcImage={styleraise}
             metaText="Stylized Image"
-            altText="Sample stylized image" />
+            altText="Sample stylized image"
+            playScale={[0.2, 0.7]} />
         </Col>
       </Row>
 
