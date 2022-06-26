@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Col, Row, Layout, Menu, Button, Space } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
+import { ParallaxBanner, ParallaxProvider } from 'react-scroll-parallax';
 import 'antd/dist/antd.min.css';
 import './css/App.css'
 import * as tf from '@tensorflow/tfjs'
@@ -9,6 +10,7 @@ import * as tf from '@tensorflow/tfjs'
 // import components
 import UploadButton from './components/UploadButton';
 import How from './components/How';
+import bg from './img/bg3.jpg';
 
 // constants
 const { Header, Content, Footer } = Layout;
@@ -47,67 +49,70 @@ const App = () => {
       </div>
       <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
     </Header>
-    <Content
-      style={{
-        padding: '0 50px',
-      }}
-    >
-      <Layout
-        className="site-layout-background"
-        style={{
-          margin: '24px 0 0 0',
-          padding: '24px 0',
-        }}
-      >
-        <Content
-          style={{
-            padding: '0 24px',
-            minHeight: 0,
-          }}
-        >
-         
-        <Row justify='space-evenly'>
-          <Col
-          xs='24'
-          sm='12'
-          md='8'
-          align='middle'>
-            <p>Content Image</p>
-            <UploadButton type={'content'}/>
-          </Col>
-          <Col
-          xs='24'
-          sm='12'
-          md='8'
-          align='middle'>
-            <p>Style Image</p>
-            <UploadButton type={'style'}/>
-          </Col>
-          <Col
-            xs='24'
-            sm='12'
-            md='8' align='middle'>
-              <p>Stylized Image</p>
-              <UploadButton type={'stylized'}/>
-            <div>
-              <Button type='primary' onClick={handleChange}
+    <Content>
+      <ParallaxProvider>
+        <ParallaxBanner 
+          layers={[{ image: bg, speed: -50}]}
+          style={{ }}>
+          
+          <div id='header-content'>
+            <Layout
+              className="site-layout-background"
               style={{
-                width: 120,
-                margin: '20px 0 0 0',
+                height: '100%',
+                padding: '24px 0',
               }}
-              >Style</Button>
-            </div>
+            >
+              <Content
+                style={{
+                  padding: '0 24px',
+                  minHeight: 0,
+                }}
+              >
             
-          </Col>
-        </Row>
-
-        </Content>
-      </Layout>
-
+              <Row justify='space-evenly'>
+                <Col
+                xs='24'
+                sm='12'
+                md='8'
+                align='middle'>
+                  <p>Content Image</p>
+                  <UploadButton type={'content'}/>
+                </Col>
+                <Col
+                xs='24'
+                sm='12'
+                md='8'
+                align='middle'>
+                  <p>Style Image</p>
+                  <UploadButton type={'style'}/>
+                </Col>
+                <Col
+                  xs='24'
+                  sm='12'
+                  md='8' align='middle'>
+                    <p>Stylized Image</p>
+                    <UploadButton type={'stylized'}/>
+                  <div>
+                    <Button type='primary' onClick={handleChange}
+                    style={{
+                      width: 120,
+                      margin: '20px 0 0 0',
+                    }}
+                    >Style</Button>
+                  </div>
+            
+                </Col>
+              </Row>
+              </Content>
+            </Layout>
+          </div>
+        </ParallaxBanner>
+      </ParallaxProvider>
       <Layout
         className = 'site-layout-background'
         style={{
-          margin: '24px 0 0 0',
+          margin: '24px 50px 0 50px',
           padding: '24px 20%',
         }}
       >
