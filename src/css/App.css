@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Petit+Formal+Script&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -26,10 +28,11 @@
 
 #main-title {
   color: white;
-  font-size: 100px;
+  font-family: 'Petit Formal Script', cursive;
+  font-size: 90px;
   text-shadow: 0px 0px 5px #000000, 0px 0px 10px #000000;
   margin-top: 3vh;
-  margin-bottom: 10vh;
+  margin-bottom: 8vh;
 }
 
 .title-image {

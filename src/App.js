@@ -73,9 +73,9 @@ const App = () => {
               
               <Row justify='center'>
                 <Col align='middle'>
-                  <Title id='main-title'>
-                    Image Style Transfer
-                  </Title>
+                  <p id='main-title'>
+                    Style Transfer
+                  </p>
                 </Col>
               </Row>
               
