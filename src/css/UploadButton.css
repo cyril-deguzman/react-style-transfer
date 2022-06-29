@@ -2,4 +2,13 @@
   width: 350px;
   height: 350px;
   margin: 0;
+  box-shadow: 0px 0px 10px, 0px 0px 15px;
+}
+
+#stylized-canvas {
+  width: 350px;
+  height: 350px;
+  margin: 0;
+  border:1px solid #726768;
+  box-shadow: 0px 0px 10px, 0px 0px 15px;
 }
