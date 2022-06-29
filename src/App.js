@@ -1,5 +1,4 @@
 // import antd component library
-import { useEffect, useState } from 'react';
 import { Col, Row, Layout, Menu, Button, Space, Typography, PageHeader } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
 import { ParallaxBanner, ParallaxProvider } from 'react-scroll-parallax';
@@ -26,8 +25,8 @@ const items1 = ['1', '2', '3'].map((key) => ({
 
 const getRatio = (image) => {
   const maxSize = 256;
-  let width = image.shape[0];
-  let height = image.shape[1];
+  const width = image.shape[0];
+  const height = image.shape[1];
 
   if(width > height) {
     let percent = height / width;
