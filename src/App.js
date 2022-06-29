@@ -21,6 +21,39 @@ const items1 = ['1', '2', '3'].map((key) => ({
   label: `nav ${key}`,
 }));
 
+const getRatio = (image) => {
+  const maxSize = 256;
+  let width = image.shape[0];
+  let height = image.shape[1];
+
+  if(width > height) {
+    let percent = height / width;
+    return [maxSize, Math.floor(maxSize * percent)];
+  }
+    
+  else {
+    let percent = width / height;
+    return [Math.floor(maxSize * percent), maxSize];
+  }
+}
+
+const preprocess = (imgData) => {
+  return tf.tidy(()=>{
+    // convert the image data to a tensor
+    let tensor = tf.browser.fromPixels(imgData, 3);
+    let ratio = getRatio(tensor)
+    const resized = tf.image.resizeBilinear(tensor, ratio).toFloat()
+  
+    // Normalize the image 
+    const offset = tf.scalar(255.0);
+    const normalized = resized.div(offset);
+  
+    //We add a dimension to get a batch shape 
+    const batched = normalized.expandDims(0);
+    return batched;
+   })
+}
+
 // App Component
 const App = () => {
   const [model, setModel] = useState({});
@@ -40,11 +73,20 @@ const App = () => {
     
     setModel(fetchedModel)
   }
+
   const handleStyle = () => {
-    console.log(model)
-    console.log(canvasRef.current)
-    console.log(contentRef.current)
-    console.log(styleRef.current)
+    console.log('style transferring...')
+    
+    const content = contentRef.current;
+    const style = styleRef.current;
+  
+    const contentTensor = preprocess(content);
+    const styleTensor = preprocess(style);
+
+    const result = model.execute([styleTensor, contentTensor]);
+    const canvas = canvasRef.current;
+  
+    tf.browser.toPixels(tf.squeeze(result), canvas);
   }
 
   return (
