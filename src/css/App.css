@@ -1,14 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Petit+Formal+Script&display=swap');
+
 * {
   margin: 0;
   padding: 0;
 }
 
-.logo {
-  float: left;
-  width: 120px;
-  height: 31px;
-  margin: 16px 24px 16px 0;
-  background: rgb(255, 255, 255);
+#navbar {
+  background: rgb(0, 0, 0, 0);
 }
 
 .ant-row-rtl .logo {
@@ -22,4 +20,20 @@
 
 #header-content {
   min-height: 95vh;
+}
+
+#main-title {
+  color: white;
+  font-family: 'Petit Formal Script', cursive;
+  font-size: 90px;
+  text-shadow: 0px 0px 5px #000000, 0px 0px 10px #000000;
+  margin-top: 3vh;
+  margin-bottom: 8vh;
+}
+
+.title-image {
+  color:white;
+  font-weight: bold;
+  font-size: 20px;
+  text-shadow: 0px 0px 5px #000000, 0px 0px 10px #000000;
 }
