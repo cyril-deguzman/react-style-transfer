@@ -81,7 +81,7 @@ const App = () => {
     
     const content = contentRef.current;
     const style = styleRef.current;
-  
+    
     const contentTensor = preprocess(content);
     const styleTensor = preprocess(style);
 
@@ -176,7 +176,7 @@ const App = () => {
         className = 'site-layout-background'
         style={{
           margin: '40px 50px 0 50px',
-          padding: '24px 20%',
+          padding: '55px 20%',
         }}
       >
         <Content 
