@@ -1,7 +1,6 @@
 // import antd component library
 import { Col, Row, Layout, Button, Space, PageHeader, Progress, BackTop, message } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
-import { ParallaxBanner, ParallaxProvider } from 'react-scroll-parallax';
 import { useRef, useState, useEffect } from 'react';
 import * as tf from '@tensorflow/tfjs'
 import 'antd/dist/antd.min.css';
