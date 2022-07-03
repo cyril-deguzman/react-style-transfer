@@ -1,7 +1,7 @@
 // necessary imports
 import React from 'react';
 import 'antd/dist/antd.min.css';
-import { Space, Typography, Card, Col, Row } from 'antd';
+import { Space, Typography, Col, Row } from 'antd';
 
 import van from '../img/van.jpg'
 import raisehand from '../img/raised-hand.jpeg'
@@ -10,13 +10,8 @@ import styleraise from '../img/styled-raise.png'
 import Sample from './Sample';
 
 const { Title, Paragraph, Link, Text } = Typography;
-const { Meta } = Card;
 
 const How = () => {
-  const handleChange = () => {
-    
-  }
-
   let github = <Link href='https://github.com/cyril-deguzman/react-style-transfer' target="_blank">here</Link>
 
   return(

@@ -1,5 +1,5 @@
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons';
-import { message, Upload, Select, Button } from 'antd';
+import { message, Upload, Select} from 'antd';
 import { useState } from 'react';
 import 'antd/dist/antd.min.css';
 import '../css/UploadButton.css';

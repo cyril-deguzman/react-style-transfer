@@ -1,7 +1,8 @@
 // import antd component library
-import { Col, Row, Layout, Button, Space, PageHeader, Progress, BackTop, message } from 'antd';
+import { Col, Row, Layout, Button, Space, PageHeader, Progress, BackTop, message, Modal } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
 import { useRef, useState, useEffect } from 'react';
+import * as mi from '@magenta/image'
 import * as tf from '@tensorflow/tfjs'
 import 'antd/dist/antd.min.css';
 import './css/App.css'
@@ -25,7 +26,7 @@ const warning = () => {
 };
 
 const getRatio = (image) => {
-  const maxSize = 220;
+  const maxSize = 256;
   const width = image.shape[0];
   const height = image.shape[1];
 
@@ -59,14 +60,20 @@ const preprocess = (imgData) => {
 
 // App Component
 const App = () => {
+  const [visible, setVisible] = useState(true)
+  const [fastModel, setFastModel] = useState(new mi.ArbitraryStyleTransferNetwork())
   const [model, setModel] = useState({});
   const [progress, setProgress]= useState(0.00);
-  const [disabled, setDisabled] = useState(true);
+  const [gpu, setGpu] = useState(true);
+  const [fast, setFast] = useState(true);
   const canvasRef = useRef()
   const contentRef = useRef()
   const styleRef = useRef()
   
   useEffect(() => {
+    fastModel.initialize().then(()=>{
+      setFast(false)
+    })
     warning()
     fetchModel()
   }, []);
@@ -79,7 +86,7 @@ const App = () => {
       console.log(`download progress: ${progressed}%`)
     
       if(progressed >= 100) {
-        setDisabled(false)
+        setGpu(false)
         console.log('finished')
         success()
       }
@@ -105,8 +112,39 @@ const App = () => {
     tf.browser.toPixels(tf.squeeze(result), canvas);
   }
 
+  const handleFastStyle = () => {
+    console.log('style transferring...')
+    
+    const content = contentRef.current;
+    const style = styleRef.current;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d')
+
+    fastModel.stylize(content, style).then((imageData) => {
+      // generate a second canvas
+      var renderer = document.createElement('canvas');
+      renderer.width = imageData.width;
+      renderer.height = imageData.height;
+      // render our ImageData on this canvas
+      renderer.getContext('2d').putImageData(imageData, 0, 0);
+
+      ctx.drawImage(renderer, 0,0, canvas.width, canvas.height)
+    });
+  }
+
   return (
     <>
+    <Modal
+      title="CAUTION: READ BEFORE USE"
+      centered
+      visible={visible}
+      footer={null}
+      onCancel={() => setVisible(false)}
+    >
+      <p>The web app has two ways to stylize your image. Please refer below on when and which to use depending on your device.</p>
+      <p><b>GPU Style</b>: use ONLY when you have a dedicated GPU. Not available on handheld devices.</p>
+      <p><b>Fast Style</b>: can be used safely but outputs a lower quality stylized image. Available on all devices.</p>
+    </Modal>
     <BackTop/>
     <Layout>
         <div id='parallax-ina' style={{
@@ -122,7 +160,7 @@ const App = () => {
                   style={{
                     padding: '0 0'
                   }}>
-                  <img src={logo} height={'100px'} width={'110px'}/>
+                  <img src={logo} id='logo'/>
                 </PageHeader>
               </Header>
             <div id='header-content'>
@@ -173,13 +211,20 @@ const App = () => {
                       <p className='title-image'>Stylized Image</p>
                       <UploadButton type={'stylized'} innerRef={canvasRef}/>
                     <div>
+                      <Button type='primary' id='fast-button'  onClick={handleFastStyle}
+                      style={{
+                        width: 120,
+                        margin: '13px 13px 0 13px',
+                        backgroundColor: "#491718", borderColor: "#4a161e" 
+                      }} disabled={fast}
+                      >Fast Style</Button>
                       <Button type='primary' onClick={handleStyle}
                       style={{
                         width: 120,
-                        margin: '13px 0 0 0',
+                        margin: '13px 0 0px 0',
                         backgroundColor: "#491718", borderColor: "#4a161e" 
-                      }} disabled={disabled}
-                      >Style</Button>
+                      }} disabled={gpu} id='gpu-button'
+                      >GPU Style</Button>
                     </div>
                   </Col>
                 </Row>
@@ -198,14 +243,11 @@ const App = () => {
         </div>
       <Layout
         className = 'site-layout-background'
-        style={{
-          margin: '40px 50px 0 50px',
-          padding: '55px 20%',
-        }}
+        id= 'pad-layout'
       >
-        <Content 
+        <Content id='pad-content'
           style={{
-          padding: '0 50px',}}
+          padding: '0 10px',}}
         >
           <How/>
         </Content>
