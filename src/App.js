@@ -60,7 +60,9 @@ const preprocess = (imgData) => {
 
 // App Component
 const App = () => {
+  let isHandheld = false;
   const [visible, setVisible] = useState(true)
+  const [visProg, setVisProg] = useState('none')
   const [fastModel, setFastModel] = useState(new mi.ArbitraryStyleTransferNetwork())
   const [model, setModel] = useState({});
   const [progress, setProgress]= useState(0.00);
@@ -71,11 +73,17 @@ const App = () => {
   const styleRef = useRef()
   
   useEffect(() => {
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) 
+      isHandheld = true;
     fastModel.initialize().then(()=>{
       setFast(false)
     })
-    warning()
-    fetchModel()
+
+    if(!isHandheld) {
+      warning()
+      setVisProg('inline-block')
+      fetchModel()
+    }
   }, []);
 
   const fetchModel = async () => {
@@ -142,8 +150,19 @@ const App = () => {
       onCancel={() => setVisible(false)}
     >
       <p>The web app has two ways to stylize your image. Please refer below on when and which to use depending on your device.</p>
-      <p><b>GPU Style</b>: use ONLY when you have a dedicated GPU. Not available on handheld devices.</p>
+      <p><b><span style={{
+        color: 'red'
+      }}>*RISK* </span>GPU Style</b>: use ONLY when you have a dedicated GPU. Not available on handheld devices.</p>
       <p><b>Fast Style</b>: can be used safely but outputs a lower quality stylized image. Available on all devices.</p>
+      <p>
+        Compared to Fast Style, the GPU Style outputs a much better stylization which was also limited to a size of 256x256 in order to improve performance, 
+        but at the expense of output quality. 
+      </p>
+      <p>
+        The progress bar you see below indicates the GPU Style model downloading, 
+        and you will not be able to style images until it is finished. 
+        Hence, the image presets will load very slow until the model is fully downloaded. 
+      </p>
     </Modal>
     <BackTop/>
     <Layout>
@@ -188,7 +207,9 @@ const App = () => {
                 </Row>
           
                 <Row justify='space-evenly'>
-                  <Col
+                  <Col style={{
+                    margin: '10px 0 0 0'
+                  }}
                   xs='24'
                   sm='12'
                   md='8'
@@ -196,7 +217,9 @@ const App = () => {
                     <p className='title-image'>Content Image</p>
                     <UploadButton type={'content'} innerRef={contentRef}/>
                   </Col>
-                  <Col
+                  <Col style={{
+                    margin: '10px 0 0 0'
+                  }}
                   xs='24'
                   sm='12'
                   md='8'
@@ -204,7 +227,9 @@ const App = () => {
                     <p className='title-image'>Style Image</p>
                     <UploadButton type={'style'} innerRef={styleRef}/>
                   </Col>
-                  <Col
+                  <Col style={{
+                    margin: '10px 0 0 0'
+                  }}
                     xs='24'
                     sm='12'
                     md='8' align='middle'>
@@ -222,14 +247,17 @@ const App = () => {
                       style={{
                         width: 120,
                         margin: '13px 0 0px 0',
-                        backgroundColor: "#491718", borderColor: "#4a161e" 
-                      }} disabled={gpu} id='gpu-button'
+                        backgroundColor: "#491718", borderColor: "#4a161e", 
+                        display: `${visProg}`
+                      }} id='gpu-button'
                       >GPU Style</Button>
                     </div>
                   </Col>
                 </Row>
                 </Content>
-                <Progress 
+                <Progress style={{
+                  display: `${visProg}`
+                }}
                     strokeColor={{
                       from: '#773806',
                       to: '#626c16',
