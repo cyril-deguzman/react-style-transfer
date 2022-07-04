@@ -1,12 +1,11 @@
 // import antd component library
 import { Col, Row, Layout, Button, Space, PageHeader, Progress, BackTop, message, Modal } from 'antd';
-import { GithubOutlined } from '@ant-design/icons';
+import { GithubOutlined, DownloadOutlined, WarningOutlined } from '@ant-design/icons';
 import { useRef, useState, useEffect } from 'react';
 import * as mi from '@magenta/image'
 import * as tf from '@tensorflow/tfjs'
 import 'antd/dist/antd.min.css';
 import './css/App.css'
-
 
 // import components
 import UploadButton from './components/UploadButton';
@@ -17,13 +16,9 @@ import logo from './img/logo1.png';
 // constants
 const { Header, Content, Footer } = Layout;
 
-const success = () => {
-  message.success('Application fully loaded!');
-};
-
-const warning = () => {
-  message.warning('Application is downloading (88mb)!');
-};
+const info = msg => message.info(msg)
+const success = msg => message.success(msg)
+const warning = msg => message.warning(msg)
 
 const getRatio = (image) => {
   const maxSize = 256;
@@ -63,6 +58,7 @@ const App = () => {
   let isHandheld = false;
   const [visible, setVisible] = useState(true)
   const [visProg, setVisProg] = useState('none')
+  const [visBtn, setVisBtn] = useState('none')
   const [fastModel, setFastModel] = useState(new mi.ArbitraryStyleTransferNetwork())
   const [model, setModel] = useState({});
   const [progress, setProgress]= useState(0.00);
@@ -75,12 +71,14 @@ const App = () => {
   useEffect(() => {
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) 
       isHandheld = true;
-    fastModel.initialize().then(()=>{
+      fastModel.initialize().then(()=>{
       setFast(false)
+      info('Fast Style now usable.')
     })
 
     if(!isHandheld) {
-      warning()
+      warning('Application is downloading (88mb)!')
+      setVisBtn('inline-block')
       setVisProg('inline-block')
       fetchModel()
     }
@@ -95,8 +93,9 @@ const App = () => {
     
       if(progressed >= 100) {
         setGpu(false)
+        setVisProg('none')
         console.log('finished')
-        success()
+        info('GPU Style now usable.')
       }
       
       setProgress(progressed)
@@ -106,44 +105,59 @@ const App = () => {
   }
 
   const handleStyle = () => {
-    console.log('style transferring...')
-    
-    const content = contentRef.current;
-    const style = styleRef.current;
-    
-    const contentTensor = preprocess(content);
-    const styleTensor = preprocess(style);
+    message.loading('please wait...', 2, () => {
+      console.log('style transferring...')
+      const content = contentRef.current;
+      const style = styleRef.current;
+      
+      const contentTensor = preprocess(content);
+      const styleTensor = preprocess(style);
 
-    const result = model.execute([styleTensor, contentTensor]);
-    const canvas = canvasRef.current;
-  
-    tf.browser.toPixels(tf.squeeze(result), canvas);
+      const result = model.execute([styleTensor, contentTensor]);
+      const canvas = canvasRef.current;
+    
+      tf.browser.toPixels(tf.squeeze(result), canvas);
+      success('Style transferred!')
+    })
   }
 
   const handleFastStyle = () => {
-    console.log('style transferring...')
-    
-    const content = contentRef.current;
-    const style = styleRef.current;
+    message.loading('please wait...', 2, () => {
+      console.log('style transferring...')
+      const content = contentRef.current;
+      const style = styleRef.current;
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext('2d')
+
+      fastModel.stylize(content, style).then((imageData) => {
+        // generate a second canvas
+        var renderer = document.createElement('canvas');
+        renderer.width = imageData.width;
+        renderer.height = imageData.height;
+
+        // render our ImageData on this canvas
+        renderer.getContext('2d').putImageData(imageData, 0, 0);
+
+        ctx.drawImage(renderer, 0,0, canvas.width, canvas.height)
+        success('Style transferred!')
+      });
+    })
+  }
+
+  const handleDownload = () => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d')
-
-    fastModel.stylize(content, style).then((imageData) => {
-      // generate a second canvas
-      var renderer = document.createElement('canvas');
-      renderer.width = imageData.width;
-      renderer.height = imageData.height;
-      // render our ImageData on this canvas
-      renderer.getContext('2d').putImageData(imageData, 0, 0);
-
-      ctx.drawImage(renderer, 0,0, canvas.width, canvas.height)
-    });
+ 
+    const url = canvas.toDataURL("image/png");
+    const link = document.createElement("a");
+    link.download = "stylized-img.png";
+    link.href = url;
+    link.click();
   }
 
   return (
     <>
     <Modal
-      title="CAUTION: READ BEFORE USE"
+      title={<><WarningOutlined style={{color: 'orange'}} /> CAUTION: READ BEFORE USE</>}
       centered
       visible={visible}
       footer={null}
@@ -152,7 +166,7 @@ const App = () => {
       <p>The web app has two ways to stylize your image. Please refer below on when and which to use depending on your device.</p>
       <p><b><span style={{
         color: 'red'
-      }}>*RISK* </span>GPU Style</b>: use ONLY when you have a dedicated GPU. Not available on handheld devices.</p>
+      }}>*RISK* </span>GPU Style</b>: use ONLY when you have a decent dedicated GPU! Not available on handheld devices.</p>
       <p><b>Fast Style</b>: can be used safely but outputs a lower quality stylized image. Available on all devices.</p>
       <p>
         Compared to Fast Style, the GPU Style outputs a much better stylization which was also limited to a size of 256x256 in order to improve performance, 
@@ -239,18 +253,22 @@ const App = () => {
                       <Button type='primary' id='fast-button'  onClick={handleFastStyle}
                       style={{
                         width: 120,
-                        margin: '13px 13px 0 13px',
+                        margin: '13px 13px 0 3px',
                         backgroundColor: "#491718", borderColor: "#4a161e" 
                       }} disabled={fast}
                       >Fast Style</Button>
                       <Button type='primary' onClick={handleStyle}
                       style={{
                         width: 120,
-                        margin: '13px 0 0px 0',
+                        margin: '13px 13px 0px 0',
                         backgroundColor: "#491718", borderColor: "#4a161e", 
-                        display: `${visProg}`
-                      }} id='gpu-button'
+                        display: `${visBtn}`
+                      }} disabled={gpu} id='gpu-button'
                       >GPU Style</Button>
+                      <Button style={{
+                        width: '31px',
+                        height: '31px',
+                      }} ghost icon={<DownloadOutlined />} size='medium' onClick={handleDownload}/>
                     </div>
                   </Col>
                 </Row>
